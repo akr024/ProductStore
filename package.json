@@ -1,0 +1,29 @@
+{
+  "name": "productstore",
+  "version": "1.0.0",
+  "description": "A small-scale fullstack project about a product store.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akr024/ProductStore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akr024/ProductStore/issues"
+  },
+  "homepage": "https://github.com/akr024/ProductStore#readme",
+  "dependencies": {
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

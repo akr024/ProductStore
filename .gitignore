@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment files
+.env
+.env.*.local
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+
+# IDEs
+.vscode/
+.idea/
+
+# Coverage and test output
+coverage/
+nyc_output/
+
+# Local MongoDB data (optional)
+data/
+
+# Optional: Ignore frontend build artifacts in backend repo
+client/build/
+
+# Optional: Ignore backend output in client repo
+server/dist/
+
+# Misc
+*.log
