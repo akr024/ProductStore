@@ -1,2 +1,2 @@
 # ProductStore
-A small-scale fullstack project about a product store
+A small-scale fullstack project about a product store.
