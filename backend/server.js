@@ -1,13 +1,27 @@
 import express, { application } from 'express';
+import mongoose from 'mongoose';
 import {connectDB} from './config/db.js'
 import Product from './models/product.model.js'
-import ObjectId from 'mongodb';
 
 const app = express();
 
 app.use(express.json()); //middleware which parses json
 
-
+app.get('/api/products', async (req, res) => {
+    try {
+        const products = await Product.find({});
+        return res.status(200).json({
+            success: true,
+            data: products
+        })
+    } catch (error) {
+        console.log("Error is", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error or ID not found"
+        })
+    }
+})
 
 app.post('/api/products', async (req, res) => {
     const product = req.body;
@@ -37,6 +51,33 @@ app.post('/api/products', async (req, res) => {
     }
 })
 
+app.patch('/api/products/:id', async (req, res) => {
+    const id = req.params.id;
+    const newProduct = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({
+            success: false,
+            message: "Invalid id"
+        })
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, newProduct, {new: true});
+        return res.status(400).json({
+            success: true,
+            message: "Product updated",
+            data: updatedProduct
+        })
+    } catch (error) {
+        console.log("Error is", error.message);
+        return res.status(400).json({
+            success: false,
+            message: "Internal server error or ID not found"
+        })
+    }
+})
+
 app.delete('/api/products/:id', async (req, res) => {
     const id = req.params.id;
     
@@ -47,7 +88,8 @@ app.delete('/api/products/:id', async (req, res) => {
             message: "Product deleted"
         })
     } catch (error) {
-        res.status(400).json({
+        console.log("Error is", error.message);
+        return res.status(400).json({
             success: false,
             message: "Internal server error or ID not found"
         })
