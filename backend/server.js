@@ -1,12 +1,58 @@
-import express from 'express';
+import express, { application } from 'express';
 import {connectDB} from './config/db.js'
+import Product from './models/product.model.js'
+import ObjectId from 'mongodb';
 
 const app = express();
 
-app.get('/', (req,res)=>{
-    res.send("server is ready!");
+app.use(express.json()); //middleware which parses json
+
+
+
+app.post('/api/products', async (req, res) => {
+    const product = req.body;
+
+    if (!product.name || !product.price || !product.image){
+        return res.status(400).json({
+            success: false,
+            message: "Some field missing"
+        })
+    }
+
+    const newProduct = new Product(product);
+    
+    try {
+        await newProduct.save();
+        return res.status(201).json({
+            success: true,
+            message: "Product created"
+        })
+    } catch (error) {
+        console.log("Error in creating product:", error.message);
+        res.status(500).json({ // 500 status = internal server error
+            success: false,
+            message: "Server error"
+        })
+
+    }
 })
 
+app.delete('/api/products/:id', async (req, res) => {
+    const id = req.params.id;
+    
+    try {
+        await Product.findByIdAndDelete(id);
+        return res.status(200).json({
+            success: true,
+            message: "Product deleted"
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Internal server error or ID not found"
+        })
+    }
+})
 
 app.listen(3000, () => {
     connectDB();
