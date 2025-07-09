@@ -6,13 +6,14 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000
 
 app.use(express.json()); //middleware which parses json
 
 app.use('/api/products', productRoutes);
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log("Server started at http://localhost:3000")
+    console.log(`Server started at http://localhost:${PORT}`)
 })
 

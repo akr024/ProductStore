@@ -90,9 +90,9 @@ export const deleteProduct = async (req, res) => {
         })
     } catch (error) {
         console.log("Error is", error.message);
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
-            message: "Internal server error or ID not found"
+            message: "Internal server error"
         })
     }
 }
